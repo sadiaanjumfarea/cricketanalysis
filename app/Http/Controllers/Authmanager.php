@@ -60,7 +60,7 @@ class Authmanager extends Controller
     $user = new User();
     $user->name = $request->name;
     $user->email = $request->email;
-    $user->password = Hash::make($request->password); 
+    $user->password =$request->password; 
     $user->save();
 
     return redirect()->route('home')->with("success", "Registration successful!");
