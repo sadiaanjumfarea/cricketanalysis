@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authmanager;
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,5 +18,10 @@ Route::get('/team', [Authmanager::class, 'createTeam'])->name('team.create');
 Route::post('/team', [Authmanager::class, 'storeTeam'])->name('team.store');
 Route::get('/dashboard/team/create', [Authmanager::class, 'createTeam'])->name('team.create');
 Route::get('/team/list', [Authmanager::class, 'listTeams'])->name('team.list');
-
 Route::get('/', [Authmanager::class, 'index'])->name('home');
+
+Route::get('/cricketers/ranking', [Authmanager::class, 'ranking'])->name('cricketers.ranking');
+Route::get('/cricketers/by_innings', [Authmanager::class, 'showCricketersByInnings'])->name('cricketers.by.innings');
+Route::get('/female_players', [Authmanager::class, 'femalePlayers'])->name('female.players');
+Route::get('/male_players', [Authmanager::class, 'malePlayers'])->name('male.players');
+Route::get('/fixtures', [Authmanager::class, 'fixtures'])->name('fixtures');

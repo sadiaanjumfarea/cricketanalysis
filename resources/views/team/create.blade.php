@@ -18,7 +18,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="cricketers" class="form-label">Select 11 Cricketers</label>
+            <label for="user_id" class="form-label">User ID</label>
+            <input type="text" name="user_id" id="user_id" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cricketers" class="form-label">Select 5 Cricketers</label>
             <select name="cricketers[]" id="cricketers" class="form-control" multiple required>
                 @foreach ($cricketers as $cricketer)
                     <option value="{{ $cricketer->id }}">{{ $cricketer->name }}</option>

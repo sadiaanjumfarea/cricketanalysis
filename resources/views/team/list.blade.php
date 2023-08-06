@@ -20,7 +20,7 @@
                 <td>
                     <ul>
                         @foreach ($team->cricketers as $cricketer)
-                        <li>{{ $cricketer->name }}</li>
+                            <li>{{ $cricketer->name }}</li>
                         @endforeach
                     </ul>
                 </td>

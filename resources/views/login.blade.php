@@ -24,5 +24,7 @@
         
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    
+    <a href="{{ route('register') }}" class="btn btn-secondary mt-3">Register</a>
 </div>
 @endsection

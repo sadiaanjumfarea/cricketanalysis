@@ -1,5 +1,7 @@
 @extends('layout')
+
 @section('title', 'Dashboard')
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -8,8 +10,25 @@
         </div>
         <div class="col-md-6 text-end">
             <a href="{{ route('team.create') }}" class="btn btn-primary">Create Team</a>
+            <a href="{{ route('cricketers.by.innings') }}" class="btn btn-primary">See Ranking</a>
+            <a href="{{ route('female.players') }}" class="btn btn-primary">See Female Players</a>
+            <a href="{{ route('male.players') }}" class="btn btn-primary">See male Players</a>
+
+            <a href="{{ route('fixtures') }}" class="btn btn-primary">See Fixtures</a>
+
         </div>
     </div>
+
+    <h2>Currently Playing Matches</h2>
+    @if($currentlyPlayingMatches->count() > 0)
+        <ul>
+            @foreach($currentlyPlayingMatches as $match)
+                <li>{{ $match->team1 }} vs. {{ $match->team2 }}</li>
+            @endforeach
+        </ul>
+    @else
+        <p>No matches are currently playing.</p>
+    @endif
 
     <table class="table mt-4">
         <thead>
