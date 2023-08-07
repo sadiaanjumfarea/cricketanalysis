@@ -19,18 +19,46 @@ class Authmanager extends Controller
         $currentlyPlayingMatches = CricketMatch::where('status', 'playing')->get();
         return view('dashboard', compact('cricketers', 'currentlyPlayingMatches'));
     }
-
-
+    public function adminDashboard()
+    {
+        $cricketers = Cricketer::all();
+        return view('admin.dashboard', compact('cricketers'));
+    }
 
     public function listTeams()
     {
         $teams = Team::where('user_id', '!=', auth()->id())->with('user', 'cricketers')->get();
         return view('team.list', compact('teams'));
     }
+    
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    public function login()
+        if ($credentials['email'] === 'admin@1234' && $credentials['password'] === '1234') {
+            Auth::attempt($credentials); 
+            return redirect()->route("admin.dashboard"); 
+        }
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('dashboard'); 
+        }
+
+        return redirect()->back()->withErrors(['login' => 'Invalid login credentials'])->withInput();
+    }
+
+    public function showLogin()
     {
         return view('login');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 
     public function index()
@@ -75,11 +103,6 @@ class Authmanager extends Controller
         return redirect()->route('home')->with("success", "Registration successful!");
     }
 
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('home');
-    }
 
     public function createTeam()
     {
@@ -87,7 +110,7 @@ class Authmanager extends Controller
         return view('team.create', compact('cricketers'));
     }
      
-
+    
     public function ranking()
     {
         $cricketers = Cricketer::orderBy('innings', 'asc')->get();
@@ -115,21 +138,62 @@ public function fixtures()
     $upcomingMatches = CricketMatch::where('status', 'upcoming')->get();
     return view('fixtures', compact('upcomingMatches'));
 }
-    public function storeTeam(Request $request)
+
+public function storeTeam(Request $request)
 {
     $request->validate([
-        'team_name' => 'required|max:255',
-        'cricketers' => 'required|array|min:11|max:11',
-        'cricketers.*' => 'required|exists:cricketers,id',
+        'team_name' => 'required|string|max:255',
+        'user_id' => 'required|integer',
+        'cricketers' => 'required|array|min:5|max:5', // Assuming 5 cricketers are required
     ]);
 
-    $team = new Team();
-    $team->name = $request->team_name;
-    $team->user_id = auth()->id();
-    $team->save();
+    $team = Team::create([
+        'name' => $request->input('team_name'),
+        'user_id' => $request->input('user_id'),
+    ]);
 
-    $team->cricketers()->attach($request->cricketers);
+    $selectedCricketers = $request->input('cricketers');
+    $team->cricketers()->sync($selectedCricketers);
 
-    return redirect()->route('team.create')->with('success', 'Team created successfully!');
+    return redirect()->route('team.list')->with('success', 'Team created successfully!');
+}
+public function showOtherTeams()
+{
+    $teams = Team::with('user', 'cricketers')->get();
+    return view('other_teams', compact('teams'));
+}
+public function editCricketer(Cricketer $cricketer)
+{
+    return view('admin.edit', compact('cricketer'));
+}
+
+public function updateCricketer(Request $request, Cricketer $cricketer)
+{
+}
+
+
+public function store(Request $request)
+{
+    $request->validate([
+        'team_name' => 'required|string|max:255',
+        'user_id' => 'required|integer',
+        'cricketers' => 'required|array|min:5|max:5', 
+    ]);
+
+    $team = Team::create([
+        'name' => $request->input('team_name'),
+        'user_id' => $request->input('user_id'),
+    ]);
+
+    $selectedCricketers = $request->input('cricketers');
+    $cricketersExist = Cricketer::whereIn('id', $selectedCricketers)->count();
+
+    if ($cricketersExist === count($selectedCricketers)) {
+        $team->cricketers()->sync($selectedCricketers);
+
+        return redirect()->route('team.list')->with('success', 'Team created successfully!');
+    } else {
+        return back()->withErrors(['cricketers' => 'Invalid cricketer selected'])->withInput();
+    }
 }
 }
