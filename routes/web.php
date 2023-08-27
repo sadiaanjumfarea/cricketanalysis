@@ -15,7 +15,6 @@ Route::post('/register', [Authmanager::class, 'registerpost'])->name('register')
 Route::get('/dashboard', [Authmanager::class, 'dashboard'])->name('dashboard');
 Route::post('/dashboard', [Authmanager::class, 'dashboardpost'])->name('dashboard');
 Route::get('/logout', [Authmanager::class, 'logout'])->name('logout');
-
 Route::get('/team', [Authmanager::class, 'createTeam'])->name('team.create');
 Route::post('/team', [Authmanager::class, 'storeTeam'])->name('team.store');
 Route::get('/dashboard/team/create', [Authmanager::class, 'createTeam'])->name('team.create');
@@ -26,6 +25,8 @@ Route::put('/cricketers/{cricketer}', [Authmanager::class, 'updateCricketer'])->
 
 Route::get('/cricketers/ranking', [Authmanager::class, 'ranking'])->name('cricketers.ranking');
 Route::get('/cricketers/by_innings', [Authmanager::class, 'showCricketersByInnings'])->name('cricketers.by.innings');
+Route::get('/cricketers/by_runrate', [Authmanager::class, 'showCricketersByrunrate'])->name('cricketers.by.runrate');
+
 Route::get('/female_players', [Authmanager::class, 'femalePlayers'])->name('female.players');
 Route::get('/male_players', [Authmanager::class, 'malePlayers'])->name('male.players');
 Route::get('/fixtures', [Authmanager::class, 'fixtures'])->name('fixtures');
@@ -36,10 +37,14 @@ Route::delete('/cricketers/{id}', [CricketerController::class, 'destroy'])->name
 Route::post('/admin/cricketers/delete', [AdminDashboardController::class, 'deleteCricketer'])->name('admin.cricket.delete');
 Route::get('/cricketers/{cricketer}/edit', 'CricketerController@edit')->name('cricketers.edit');
 Route::get('/admin/edit', [AdminDashboardController::class, 'edit'])->name('edit');
-
 Route::get('/test', [AdminDashboardController::class, 'api_test']);
 Route::get('/match', [AdminDashboardController::class, 'matchDetails'])->name('match');
 Route::get('/comingmatch', [AdminDashboardController::class, 'comingmatch'])->name('comingmatch');
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+Route::delete('/cricketers/destroy', 'CricketerController@destroy')->name('cricketers.destroy');
+
+
 
 
 

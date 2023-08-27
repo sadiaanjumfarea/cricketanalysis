@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\CricketMatch;
-use App\Models\Match;
 use App\Models\Team;
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Match;
+use App\Models\Cricketer;
+use App\Models\CricketMatch;
+
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Cricketer;
+use Illuminate\Support\Facades\Http;
+
 class Authmanager extends Controller
 {
     public function dashboard()
@@ -62,9 +66,16 @@ class Authmanager extends Controller
     }
 
     public function index()
-    {
-        return view('index');
-    }
+{
+    $response = HTTP::post('https://api.cricapi.com/v1/cricScore?apikey=64f08de9-f8e6-4c1d-be48-07db9019b441', [
+        'apikey' => '64f08de9-f8e6-4c1d-be48-07db9019b441',
+    ]);
+
+    $score = $response->json(); 
+
+    return view('index', ['score' => $score]);
+}
+
 
     public function loginpost(Request $request)
     {
@@ -123,6 +134,14 @@ class Authmanager extends Controller
         $cricketers = Cricketer::orderBy('innings', 'desc')->get();
         return view('cricketers.by_innings', compact('cricketers'));
     }
+
+    public function showCricketersByrunrate()
+    {
+        $cricketers = Cricketer::orderBy('run_rate', 'desc')->get();
+    
+        return view('cricketers.by_runrate', compact('cricketers'));
+    }
+
     public function femalePlayers()
 {
     $femalePlayers = Cricketer::where('gender', 'female')->get();
@@ -138,6 +157,7 @@ public function fixtures()
     $upcomingMatches = CricketMatch::where('status', 'upcoming')->get();
     return view('fixtures', compact('upcomingMatches'));
 }
+
 
 public function storeTeam(Request $request)
 {
@@ -196,4 +216,5 @@ public function store(Request $request)
         return back()->withErrors(['cricketers' => 'Invalid cricketer selected'])->withInput();
     }
 }
+
 }

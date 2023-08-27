@@ -28,16 +28,12 @@
     <div class="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Your Logo</a>
+                <<a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/logo.png') }}" alt="Your Logo" style="max-height: 90px;">
+                </a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('team.list') }}">Other Teams</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cricketers.by.innings') }}">Cricketers by Innings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Loginpage</a>

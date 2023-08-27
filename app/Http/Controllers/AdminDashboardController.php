@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Http;
 
 class AdminDashboardController extends Controller
 {
+    public function dashboard()
+    {
+        $cricketers = Cricketer::all();
+
+        return view('admin.dashboard', ['cricketers' => $cricketers]);
+    }
     
     public function index()
     {

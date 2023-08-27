@@ -14,20 +14,20 @@ class CricketerController extends Controller{
     return $next($request);
 }
 
-    public function destroy(Request $request)
-    {
-        $cricketerId = $request->input('cricketer_id');
+public function destroy(Request $request)
+{
+    $cricketerId = $request->input('cricketer_id');
 
-        $cricketer = Cricketer::find($cricketerId);
+    $cricketer = Cricketer::find($cricketerId);
 
-        if ($cricketer) {
-            $cricketer->delete();
+    if ($cricketer) {
+        $cricketer->delete();
 
-            return redirect()->route('admin.dashboard')->with('success', 'Cricketer deleted successfully!');
-        } else {
-            return redirect()->route('admin.dashboard')->with('error', 'Cricketer not found.');
-        }
+        return redirect()->route('admin.dashboard')->with('success', 'Cricketer deleted successfully!');
+    } else {
+        return redirect()->route('admin.dashboard')->with('error', 'Cricketer not found.');
     }
+}
     
     public function update(Request $request, Cricketer $cricketer)
     {

@@ -3,36 +3,42 @@
 @section('title', 'Home')
 
 @section('content')
-<div class="container">
-    <h1>A TO Z CRICKET</h1>
-    <p>Explore the world of cricket and stay updated with the latest news, scores, and more.</p>
-    
-    <div class="top-right">
-        <h2>Currently Playing Matches</h2>
-        @if (!empty($currentlyPlayingMatches) && count($currentlyPlayingMatches) > 0)
-            <ul>
-                @foreach ($currentlyPlayingMatches as $match)
-                    <li>{{ $match->team1 }} vs. {{ $match->team2 }}</li>
-                @endforeach
-            </ul>
-        @else
-            <p>No matches are currently playing.</p>
-        @endif
-        
-        <h2>Live Cricket Score</h2>
-        @php
-            $apiUrl = 'https://api.cricapi.com/v1/matches?apikey=64f08de9-f8e6-4c1d-be48-07db9019b441&offset=0';
-            $response = \Illuminate\Support\Facades\Http::get($apiUrl);
-            $data = $response->json();
-        @endphp
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-        @if (isset($data['score']))
-            <p>{{ $data['score'] }}</p>
-        @else
-            <p>Unable to fetch live cricket score at the moment.</p>
-        @endif
-    </div>
-    
+
+<div class="container">
+        <h1>CRIC ANALYSIS</h1>
+    <p>Explore the world of cricket and stay updated with the latest news, scores, and more.</p>
     <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+    <!-- Display cricket match details -->
+    <div class="container">
+        <h2>Upcoming National Team Match Details</h2>
+        <div class="row">
+            @foreach ($score['data'] as $match)
+                @if (strpos($match['t1'], '[') !== false && strpos($match['t2'], '[') !== false)
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ $match['t1'] }} vs {{ $match['t2'] }}
+                        </div>
+                        <div class="card-body">
+                            <p>Date: {{ $match['dateTimeGMT'] }}</p>
+                            <p>Match Type: {{ $match['matchType'] }}</p>
+                            <p>Status: {{ $match['status'] }}</p>
+                            @if (array_key_exists('t1img', $match))
+                                <img src="{{ $match['t1img'] }}" alt="{{ $match['t1'] }} Logo" class="img-fluid">
+                            @endif
+                            @if (array_key_exists('t2img', $match))
+                                <img src="{{ $match['t2img'] }}" alt="{{ $match['t2'] }} Logo" class="img-fluid">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+
+    
 </div>
 @endsection

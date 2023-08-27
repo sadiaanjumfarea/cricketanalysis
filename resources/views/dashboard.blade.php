@@ -5,13 +5,40 @@
 @section('content')
 <div class="container">
     <h1 class="mb-4">Dashboard</h1>
-    <div class="row">
+    <div class="row" aling="center">
         <div class="col-md-12 text-end">
             <a href="{{ route('team.create') }}" class="btn btn-primary">Create Team</a>
-            <a href="{{ route('cricketers.by.innings') }}" class="btn btn-primary">See Ranking</a>
-            <a href="{{ route('female.players') }}" class="btn btn-primary">See Female Players</a>
-            <a href="{{ route('male.players') }}" class="btn btn-primary">See Male Players</a>
-            <a href="{{ route('match') }}" class="btn btn-primary">Current Matches</a>
+            <a href="{{ route('team.list') }}" class="btn btn-primary">Other Teams</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    See Ranking
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('cricketers.by.runrate') }}">Cricketer by Runrate</a>
+                    <a class="dropdown-item" href="{{ route('cricketers.by.innings') }}">Cricketer by Innings</a>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    See Players
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('female.players') }}">Female Players</a>
+                    <a class="dropdown-item" href="{{ route('male.players') }}">Male Players</a>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Matches
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('match') }}">Current Matches</a>
+                    <a class="dropdown-item" href="{{ route('comingmatch') }}">Upcoming Matches</a>
+                </div>
+            </div>
+            
+            
         </div>
     </div>
 
