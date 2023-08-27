@@ -14,9 +14,8 @@
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
         
-        <h2>Cricketers List</h2>
-        <ul>
-            
-        </ul>
+        <h2><a href="{{ route('edit') }}" class="btn btn-primary">Edit Players</a></h2>
+
+       
     </div>
 @endsection

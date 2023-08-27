@@ -8,7 +8,7 @@
         <thead>
             <tr>
                 <th>Team Name</th>
-                <th>Owner</th>
+                <th>User Id</th>
                 <th>Members</th>
             </tr>
         </thead>
@@ -16,7 +16,7 @@
             @foreach ($teams as $team)
             <tr>
                 <td>{{ $team->name }}</td>
-                <td>{{ $team->user->name }}</td>
+                <td>{{ $team->user_id }}</td>
                 <td>
                     <ul>
                         @foreach ($team->cricketers as $cricketer)
@@ -24,7 +24,9 @@
                         @endforeach
                     </ul>
                 </td>
-            </tr>
+            </tr>@php
+                
+            @endphp
             @endforeach
         </tbody>
     </table>

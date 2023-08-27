@@ -5,11 +5,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCricketerTeamTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('cricketer_team', function (Blueprint $table) {
@@ -17,17 +12,11 @@ class CreateCricketerTeamTable extends Migration
             $table->unsignedBigInteger('team_id');
             $table->timestamps();
 
-            // Define foreign keys
             $table->foreign('cricketer_id')->references('id')->on('cricketers')->onDelete('cascade');
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('cricketer_team');

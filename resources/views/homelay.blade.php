@@ -31,13 +31,13 @@
                 <a class="navbar-brand" href="#">Your Logo</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('login') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('team.list') }}">Other Teams</a>
+                        <a class="nav-link" href="{{ route('login') }}">Other Teams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cricketers.by.innings') }}">Cricketers by Innings</a>
+                        <a class="nav-link" href="{{ route('login') }}">Cricketers by Innings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Loginpage</a>

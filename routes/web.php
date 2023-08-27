@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authmanager;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CricketerController;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,10 +29,19 @@ Route::get('/cricketers/by_innings', [Authmanager::class, 'showCricketersByInnin
 Route::get('/female_players', [Authmanager::class, 'femalePlayers'])->name('female.players');
 Route::get('/male_players', [Authmanager::class, 'malePlayers'])->name('male.players');
 Route::get('/fixtures', [Authmanager::class, 'fixtures'])->name('fixtures');
-Route::post('/team', [Authmanager::class, 'storeTeam'])->name('team.storeTeam');
 Route::get('/login', [Authmanager::class, 'showLogin'])->name('login');
 Route::post('/login', [Authmanager::class, 'login']);
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 Route::delete('/cricketers/{id}', [CricketerController::class, 'destroy'])->name('cricketers.destroy');
 Route::post('/admin/cricketers/delete', [AdminDashboardController::class, 'deleteCricketer'])->name('admin.cricket.delete');
 Route::get('/cricketers/{cricketer}/edit', 'CricketerController@edit')->name('cricketers.edit');
+Route::get('/admin/edit', [AdminDashboardController::class, 'edit'])->name('edit');
+
+Route::get('/test', [AdminDashboardController::class, 'api_test']);
+Route::get('/match', [AdminDashboardController::class, 'matchDetails'])->name('match');
+Route::get('/comingmatch', [AdminDashboardController::class, 'comingmatch'])->name('comingmatch');
+
+
+
+
+Route::post('/admin/cricketer/store', [CricketerController::class, 'store'])->name('admin.cstore');

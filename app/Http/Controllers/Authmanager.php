@@ -38,7 +38,7 @@ class Authmanager extends Controller
             'password' => 'required',
         ]);
 
-        if ($credentials['email'] === 'admin@1234' && $credentials['password'] === '1234') {
+        if ($credentials['email'] === 'adminn@1234' && $credentials['password'] === '123456') {
             Auth::attempt($credentials); 
             return redirect()->route("admin.dashboard"); 
         }
